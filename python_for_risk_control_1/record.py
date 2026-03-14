@@ -1,5 +1,6 @@
 #1
 from itertools import count
+from pstats import Stats
 from unittest import result
 
 
@@ -438,7 +439,192 @@ def exercise14():
     #     print(f"user={uid},total={total},count={count},max={max}")
 
 
-                
+#15 修正版
+# def exercise15():
+    transactions = [
+        {"user_id": "u1", "amount": 100},
+        {"user_id": "u2", "amount": 800},
+        {"user_id": "u3", "amount": 5000},
+        {"user_id": "u1", "amount": 2000},
+        {"user_id": "u4", "amount": 50},
+        {"user_id": "u2", "amount": 1200},
+        {"user_id": "u3", "amount": 300},
+    ]
+
+    stats = {} # key: user_id, value: {"total": ..., "count": ..., "max": ...}
+    for tx in transactions:
+        uid = tx["user_id"]
+        amt = tx["amount"]
+
+        if uid not in stats:
+            stats[uid] = {"total" : 0,"count" : 0,"max" : 0}
+
+        stats[uid] ["count"] += 1
+        stats[uid]["total"] += amt
+
+        if amt >= stats[uid]["max"]:
+            stats[uid]["max"] = amt
+
+    for uid , info in stats.items():
+        total = info["total"]
+        count = info["count"]
+        max_amt = info["max"]
+
+        print(f"user={uid} total={total} count={count} max={max_amt}")
+
+# 16按“省份 + 风险标签”做统计（继续字典聚合）
+# def exercise16():
+    transactions = [
+    {"user_id": "u1", "province": "BJ", "tag": "NORMAL"},
+    {"user_id": "u2", "province": "SH", "tag": "BLACKLIST"},
+    {"user_id": "u3", "province": "BJ", "tag": "HIGH_RISK"},
+    {"user_id": "u4", "province": "GD", "tag": "NORMAL"},
+    {"user_id": "u5", "province": "BJ", "tag": "NORMAL"},
+    {"user_id": "u6", "province": "GD", "tag": "BLACKLIST"},
+    {"user_id": "u7", "province": "SH", "tag": "NORMAL"},
+    ]
+
+    stats = {} #key = province ,value ={"count":0,"black_count":0,"high_count":0}
+
+    for tx in transactions:
+        prv = tx["province"]
+        tag1 = tx["tag"]
+
+        if prv not in stats:
+            stats[prv] = {"count":0,"black_count":0,"high_count":0}
+
+        stats[prv]["count"] += 1
+        stats[prv]["black_count"] = tag1.count("BLACKLIST")
+        stats[prv]["high_count"] = tag1.count("HIGH_RISK")
+
+        for prv , info in stats.items():
+            count = info["count"]
+            black = info["black_count"]
+            high = info ["high_count"]
+
+        print(f"province={prv} count={count} black={black} high={high}")
+
+# 16 secondtry
+# def exercise16():
+    transactions = [
+    {"user_id": "u1", "province": "BJ", "tag": "NORMAL"},
+    {"user_id": "u2", "province": "SH", "tag": "BLACKLIST"},
+    {"user_id": "u3", "province": "BJ", "tag": "HIGH_RISK"},
+    {"user_id": "u4", "province": "GD", "tag": "NORMAL"},
+    {"user_id": "u5", "province": "BJ", "tag": "NORMAL"},
+    {"user_id": "u6", "province": "GD", "tag": "BLACKLIST"},
+    {"user_id": "u7", "province": "SH", "tag": "NORMAL"},
+    ]
+
+    stats = {} #key = province ,value ={"count":0,"black_count":0,"high_count":0}
+    for tx in transactions:
+        prv = tx["province"]
+        tag = tx["tag"]
+
+        if prv not in stats:
+            stats[prv] = {"count":0,"black_count":0,"high_count":0}
+
+        stats[prv]["count"] += 1
+            
+        if tag == "BLACKLIST":
+                stats[prv]["black_count"] += 1
+
+        if tag == "HIGH_RISK":
+                stats[prv]["high_count"] += 1
+            
+    for prv , info in stats.items():
+        count = info["count"]
+        black = info["black_count"]
+        high = info["high_count"]
+        print(f"province={prv} count={count} black={black} high={high}")
+
+    
+# 17按“用户 + 风险标签”做二维统计”
+def exercise17():
+    transactions = [
+    {"user_id": "u1", "tag": "NORMAL"},
+    {"user_id": "u2", "tag": "BLACKLIST"},
+    {"user_id": "u1", "tag": "HIGH_RISK"},
+    {"user_id": "u3", "tag": "NORMAL"},
+    {"user_id": "u2", "tag": "NORMAL"},
+    {"user_id": "u1", "tag": "NORMAL"},
+    {"user_id": "u3", "tag": "HIGH_RISK"},
+    ]
+
+    stats={} #key =user_id value = {"count":0 "nomal":0 "high":0 "black":0} 字典中:为映射关系 而=为赋值
+
+    for tx in transactions:
+        uid = tx["user_id"]
+        tag = tx["tag"]
+
+        if uid not in stats:
+            stats[uid] = {"count":0,"normal":0,"high":0,"black":0 }
+
+        stats[uid]["count"] += 1
+
+        if tag == "NORMAL":
+            stats[uid]["normal"] += 1
+
+        if tag == "HIGH_RISK":
+            stats[uid]["high"] += 1
+
+        if tag == "BLACKLIST":
+            stats[uid]["black"] += 1
+
+    for uid,info in stats.items():
+        count = info["count"]
+        black = info["black"]
+        high = info["high"]
+        normal = info["normal"]
+        print(f"user = {uid} count = {count} normal = {normal} high = {high} black = {black}")
+
+
+# 18 综合小项目——简单“用户风险画像”
+def exercise18():
+    transactions = [
+    {"user_id": "u1", "amount": 100,  "tag": "NORMAL"},
+    {"user_id": "u2", "amount": 800,  "tag": "BLACKLIST"},
+    {"user_id": "u1", "amount": 3000, "tag": "HIGH_RISK"},
+    {"user_id": "u3", "amount": 50,   "tag": "NORMAL"},
+    {"user_id": "u2", "amount": 1200, "tag": "NORMAL"},
+    {"user_id": "u1", "amount": 500,  "tag": "NORMAL"},
+    {"user_id": "u3", "amount": 2000, "tag": "HIGH_RISK"},
+]
+
+    stats = {} #key =user_id value = {"count":0 "total":0 "max":0 "high_count":0 "high_tag":0 "black_tag':0"}
+
+    for tx in transactions:
+        uid = tx["user_id"]
+        amt = tx["amount"]
+        tag = tx["tag"]
+
+        if uid not in stats:
+            stats[uid] = {"count":0,"total":0,"max":0,"high_count":0,"high_tag_count":0,"black_tag_count":0}
+
+        stats[uid]["count"] += 1
+        stats[uid]["total"] += amt
+        
+
+        if amt >= stats[uid]["max"]:
+            stats[uid]["max"] = amt
+
+        if amt >= 2000:
+            stats[uid]["high_count"] += 1
+        
+        if tag == "HIGH_RISK":
+            stats[uid]["high_tag_count"] += 1
+
+        if tag == "BLACKLIST":
+            stats[uid]["black_tag_count"] += 1
+
+    for uid,info in stats.items():
+        count = info["count"]
+        total = info["total"]
+        max = info["max"]
+        high_count = info["high_count"]
+        high_tag = info["high_tag_count"]
+        black_tag = info["black_tag_count"]
+        print(f"user={uid} count={count} total={total} max={max} high_count={high_count} high_tag={high_tag} black_tag={black_tag}")
 
 if __name__ == "__main__":
-    exercise15()
+    exercise18()
