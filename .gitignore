@@ -2,3 +2,6 @@
 __pycache__/
 *.pyc
 .ipynb_checkpoints/
+.vscode/
+AGENTS.md
+py_for_da_analysis/examples/out.csv
