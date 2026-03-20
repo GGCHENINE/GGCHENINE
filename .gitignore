@@ -6,4 +6,6 @@ __pycache__/
 AGENTS.md
 py_for_da_analysis/examples/out.csv
 *.sqlite-journal
+py_for_da_analysis/mydata.sqlite
+py_for_da_analysis/datasets/
 py_for_da_analysis/datasets/fec/P00000001-ALL.csv
