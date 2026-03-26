@@ -9,3 +9,12 @@ py_for_da_analysis/examples/out.csv
 py_for_da_analysis/mydata.sqlite
 py_for_da_analysis/datasets/
 py_for_da_analysis/datasets/fec/P00000001-ALL.csv
+home-credit-default-risk/application_train.csv
+home-credit-default-risk/application_test.csv
+home-credit-default-risk/bureau.csv
+home-credit-default-risk/bureau_balance.csv
+home-credit-default-risk/credit_card_balance.csv
+home-credit-default-risk/installments_payments.csv
+home-credit-default-risk/POS_CASH_balance.csv
+home-credit-default-risk/previous_application.csv
+home-credit-default-risk/sample_submission.csv
