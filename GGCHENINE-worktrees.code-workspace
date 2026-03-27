@@ -1,0 +1,31 @@
+{
+  "folders": [
+    {
+      "name": "main-repo",
+      "path": "."
+    },
+    {
+      "name": "study-py-da-analysis",
+      "path": ".worktrees/py-da-analysis"
+    },
+    {
+      "name": "study-risk-control",
+      "path": ".worktrees/risk-control"
+    },
+    {
+      "name": "project-online-retail",
+      "path": ".worktrees/online-retail"
+    },
+    {
+      "name": "project-home-credit",
+      "path": ".worktrees/home-credit"
+    }
+  ],
+  "settings": {
+    "python.defaultInterpreterPath": "/opt/anaconda3/envs/pydata-book/bin/python",
+    "files.exclude": {
+      "**/.git": true,
+      "**/.ipynb_checkpoints": true
+    }
+  }
+}
